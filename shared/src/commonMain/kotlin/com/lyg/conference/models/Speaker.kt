@@ -6,9 +6,10 @@ import kotlinx.serialization.Serializable
 data class Speaker(
     val id: String,
     val name: String,
-    val bio: String,
-    val title: String? = null,
-    val organization: String? = null,
+    val bio: String = "",
+    val title: String = "",
+    val organization: String = "",
+    val email: String = "",
     val profileImageUrl: String? = null,
     val socialLinks: Map<String, String> = emptyMap(),
     val expertise: List<String> = emptyList()

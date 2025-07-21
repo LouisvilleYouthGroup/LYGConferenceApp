@@ -5,10 +5,7 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.lyg.conference.android.ui.screens.AttendeeScreen
-import com.lyg.conference.android.ui.screens.LoginScreen
-import com.lyg.conference.android.ui.screens.OrganizerScreen
-import com.lyg.conference.android.ui.screens.ScheduleScreen
+import com.lyg.conference.android.ui.screens.*
 
 @Composable
 fun LYGConferenceNavigation(
@@ -51,6 +48,24 @@ fun LYGConferenceNavigation(
             OrganizerScreen(
                 onNavigateToSchedule = {
                     navController.navigate("schedule")
+                },
+                onNavigateToScheduleManagement = {
+                    navController.navigate("schedule_management")
+                },
+                onNavigateToSpeakerManagement = {
+                    navController.navigate("speaker_management")
+                },
+                onNavigateToEventCreation = {
+                    navController.navigate("event_creation")
+                },
+                onNavigateToAnalytics = {
+                    navController.navigate("analytics")
+                },
+                onNavigateToNotifications = {
+                    navController.navigate("notifications")
+                },
+                onNavigateToSettings = {
+                    navController.navigate("settings")
                 }
             )
         }
@@ -58,6 +73,67 @@ fun LYGConferenceNavigation(
         composable("schedule") {
             ScheduleScreen(
                 onBackClick = {
+                    navController.popBackStack()
+                }
+            )
+        }
+        
+        // New dashboard feature screens
+        composable("schedule_management") {
+            ScheduleManagementScreen(
+                onNavigateBack = {
+                    navController.popBackStack()
+                },
+                onAddSession = {
+                    // TODO: Navigate to add session screen
+                }
+            )
+        }
+        
+        composable("speaker_management") {
+            SpeakerManagementScreen(
+                onNavigateBack = {
+                    navController.popBackStack()
+                },
+                onAddSpeaker = {
+                    // TODO: Navigate to add speaker screen
+                }
+            )
+        }
+        
+        composable("event_creation") {
+            EventCreationScreen(
+                onNavigateBack = {
+                    navController.popBackStack()
+                },
+                onAddEvent = {
+                    // TODO: Navigate to add event screen
+                }
+            )
+        }
+        
+        composable("analytics") {
+            AnalyticsScreen(
+                onNavigateBack = {
+                    navController.popBackStack()
+                }
+            )
+        }
+        
+        composable("notifications") {
+            NotificationsScreen(
+                onNavigateBack = {
+                    navController.popBackStack()
+                },
+                onCreateNotification = {
+                    // TODO: Navigate to create notification screen
+                }
+            )
+        }
+        
+        composable("settings") {
+            SettingsScreen(
+                onNavigateBack = {
                     navController.popBackStack()
                 }
             )

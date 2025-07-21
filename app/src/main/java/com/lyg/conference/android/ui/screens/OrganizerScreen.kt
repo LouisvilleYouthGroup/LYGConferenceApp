@@ -22,7 +22,13 @@ import androidx.compose.ui.unit.sp
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun OrganizerScreen(
-    onNavigateToSchedule: () -> Unit
+    onNavigateToSchedule: () -> Unit,
+    onNavigateToScheduleManagement: () -> Unit,
+    onNavigateToSpeakerManagement: () -> Unit,
+    onNavigateToEventCreation: () -> Unit,
+    onNavigateToAnalytics: () -> Unit,
+    onNavigateToNotifications: () -> Unit,
+    onNavigateToSettings: () -> Unit
 ) {
     Column(
         modifier = Modifier
@@ -72,17 +78,20 @@ fun OrganizerScreen(
         LazyColumn(
             verticalArrangement = Arrangement.spacedBy(12.dp)
         ) {
-            items(organizerMenuItems) { item ->
+            items(organizerMenuItems) { menuItem ->
                 OrganizerMenuItem(
-                    title = item.title,
-                    description = item.description,
-                    icon = item.icon,
+                    title = menuItem.title,
+                    description = menuItem.description,
+                    icon = menuItem.icon,
                     onClick = {
-                        when (item.title) {
-                            "Schedule Management" -> onNavigateToSchedule()
-                            else -> {
-                                // Handle other navigation
-                            }
+                        when (menuItem.title) {
+                            "Schedule Management" -> onNavigateToScheduleManagement()
+                            "Speaker Management" -> onNavigateToSpeakerManagement()
+                            "Event Creation" -> onNavigateToEventCreation()
+                            "Analytics" -> onNavigateToAnalytics()
+                            "Notifications" -> onNavigateToNotifications()
+                            "Settings" -> onNavigateToSettings()
+                            "Schedule" -> onNavigateToSchedule()
                         }
                     }
                 )

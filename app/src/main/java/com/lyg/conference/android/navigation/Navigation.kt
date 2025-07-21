@@ -6,6 +6,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.lyg.conference.android.ui.screens.*
+import com.lyg.conference.models.UserRole
 
 @Composable
 fun LYGConferenceNavigation(
@@ -32,15 +33,31 @@ fun LYGConferenceNavigation(
                             }
                         }
                     }
-                }
+                },
+                onRegister = { navController.navigate("register") }
             )
         }
-        
+        composable("register") {
+            RegisterScreen(
+                onRegisterSuccess = { userRole ->
+                    when (userRole) {
+                        UserRole.ATTENDEE -> navController.navigate("attendee_dashboard") {
+                            popUpTo("register") { inclusive = true }
+                        }
+                        UserRole.ORGANIZER -> navController.navigate("organizer_dashboard") {
+                            popUpTo("register") { inclusive = true }
+                        }
+                    }
+                },
+                onBack = { navController.popBackStack() }
+            )
+        }
         composable("attendee_dashboard") {
             AttendeeScreen(
                 onNavigateToSchedule = {
                     navController.navigate("schedule")
-                }
+                },
+                onBack = { navController.popBackStack() }
             )
         }
         
@@ -66,7 +83,8 @@ fun LYGConferenceNavigation(
                 },
                 onNavigateToSettings = {
                     navController.navigate("settings")
-                }
+                },
+                onBack = { navController.popBackStack() }
             )
         }
         

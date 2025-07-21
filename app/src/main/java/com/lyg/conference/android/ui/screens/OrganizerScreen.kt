@@ -6,6 +6,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Analytics
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.CalendarToday
 import androidx.compose.material.icons.filled.Group
 import androidx.compose.material.icons.filled.Notifications
@@ -28,73 +29,88 @@ fun OrganizerScreen(
     onNavigateToEventCreation: () -> Unit,
     onNavigateToAnalytics: () -> Unit,
     onNavigateToNotifications: () -> Unit,
-    onNavigateToSettings: () -> Unit
+    onNavigateToSettings: () -> Unit,
+    onBack: () -> Unit
 ) {
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(16.dp)
-    ) {
-        // Header
-        Text(
-            text = "Organizer Dashboard",
-            fontSize = 24.sp,
-            fontWeight = FontWeight.Bold,
-            modifier = Modifier.padding(bottom = 8.dp)
-        )
-        
-        Text(
-            text = "Manage your Louisville Youth Group Conference",
-            fontSize = 16.sp,
-            color = MaterialTheme.colorScheme.onSurfaceVariant,
-            modifier = Modifier.padding(bottom = 24.dp)
-        )
-
-        // Quick Stats
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(bottom = 24.dp),
-            horizontalArrangement = Arrangement.spacedBy(12.dp)
-        ) {
-            StatCard(
-                title = "Sessions",
-                value = "12",
-                modifier = Modifier.weight(1f)
-            )
-            StatCard(
-                title = "Attendees",
-                value = "85",
-                modifier = Modifier.weight(1f)
-            )
-            StatCard(
-                title = "Speakers",
-                value = "8",
-                modifier = Modifier.weight(1f)
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                title = { Text("Organizer Dashboard") },
+                navigationIcon = {
+                    IconButton(onClick = onBack) {
+                        Icon(Icons.Filled.ArrowBack, contentDescription = "Back")
+                    }
+                }
             )
         }
-
-        // Management Options
-        LazyColumn(
-            verticalArrangement = Arrangement.spacedBy(12.dp)
+    ) { paddingValues ->
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(paddingValues)
+                .padding(16.dp)
         ) {
-            items(organizerMenuItems) { menuItem ->
-                OrganizerMenuItem(
-                    title = menuItem.title,
-                    description = menuItem.description,
-                    icon = menuItem.icon,
-                    onClick = {
-                        when (menuItem.title) {
-                            "Schedule Management" -> onNavigateToScheduleManagement()
-                            "Speaker Management" -> onNavigateToSpeakerManagement()
-                            "Event Creation" -> onNavigateToEventCreation()
-                            "Analytics" -> onNavigateToAnalytics()
-                            "Notifications" -> onNavigateToNotifications()
-                            "Settings" -> onNavigateToSettings()
-                            "Schedule" -> onNavigateToSchedule()
-                        }
-                    }
+            // Header
+            Text(
+                text = "Organizer Dashboard",
+                fontSize = 24.sp,
+                fontWeight = FontWeight.Bold,
+                modifier = Modifier.padding(bottom = 8.dp)
+            )
+            
+            Text(
+                text = "Manage your Louisville Youth Group Conference",
+                fontSize = 16.sp,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                modifier = Modifier.padding(bottom = 24.dp)
+            )
+
+            // Quick Stats
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(bottom = 24.dp),
+                horizontalArrangement = Arrangement.spacedBy(12.dp)
+            ) {
+                StatCard(
+                    title = "Sessions",
+                    value = "12",
+                    modifier = Modifier.weight(1f)
                 )
+                StatCard(
+                    title = "Attendees",
+                    value = "85",
+                    modifier = Modifier.weight(1f)
+                )
+                StatCard(
+                    title = "Speakers",
+                    value = "8",
+                    modifier = Modifier.weight(1f)
+                )
+            }
+
+            // Management Options
+            LazyColumn(
+                verticalArrangement = Arrangement.spacedBy(12.dp)
+            ) {
+                items(organizerMenuItems) { menuItem ->
+                    OrganizerMenuItem(
+                        title = menuItem.title,
+                        description = menuItem.description,
+                        icon = menuItem.icon,
+                        onClick = {
+                            when (menuItem.title) {
+                                "Schedule Management" -> onNavigateToScheduleManagement()
+                                "Speaker Management" -> onNavigateToSpeakerManagement()
+                                "Event Creation" -> onNavigateToEventCreation()
+                                "Analytics" -> onNavigateToAnalytics()
+                                "Notifications" -> onNavigateToNotifications()
+                                "Settings" -> onNavigateToSettings()
+                                "Schedule" -> onNavigateToSchedule()
+                            }
+                        }
+                    )
+                }
             }
         }
     }

@@ -12,16 +12,23 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.lyg.conference.models.UserRole
+import com.lyg.conference.repository.UserRepository
+import org.koin.compose.koinInject
+import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun LoginScreen(
-    onLoginSuccess: (UserRole) -> Unit
+    onLoginSuccess: (UserRole) -> Unit,
+    onRegister: () -> Unit
 ) {
+    val userRepository: UserRepository = koinInject()
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var selectedRole by remember { mutableStateOf(UserRole.ATTENDEE) }
     var isLoading by remember { mutableStateOf(false) }
+    var errorMessage by remember { mutableStateOf<String?>(null) }
+    val scope = rememberCoroutineScope()
 
     Column(
         modifier = Modifier
@@ -36,14 +43,12 @@ fun LoginScreen(
             fontWeight = FontWeight.Bold,
             modifier = Modifier.padding(bottom = 8.dp)
         )
-        
         Text(
             text = "Conference App",
             fontSize = 20.sp,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
             modifier = Modifier.padding(bottom = 32.dp)
         )
-
         OutlinedTextField(
             value = email,
             onValueChange = { email = it },
@@ -53,7 +58,6 @@ fun LoginScreen(
                 .fillMaxWidth()
                 .padding(bottom = 16.dp)
         )
-
         OutlinedTextField(
             value = password,
             onValueChange = { password = it },
@@ -64,8 +68,6 @@ fun LoginScreen(
                 .fillMaxWidth()
                 .padding(bottom = 16.dp)
         )
-
-        // Role Selection
         Card(
             modifier = Modifier
                 .fillMaxWidth()
@@ -79,7 +81,6 @@ fun LoginScreen(
                     style = MaterialTheme.typography.titleMedium,
                     modifier = Modifier.padding(bottom = 8.dp)
                 )
-                
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.spacedBy(16.dp)
@@ -90,7 +91,6 @@ fun LoginScreen(
                         selected = selectedRole == UserRole.ATTENDEE,
                         modifier = Modifier.weight(1f)
                     )
-                    
                     FilterChip(
                         onClick = { selectedRole = UserRole.ORGANIZER },
                         label = { Text("Organizer") },
@@ -100,12 +100,26 @@ fun LoginScreen(
                 }
             }
         }
-
+        if (errorMessage != null) {
+            Text(
+                text = errorMessage!!,
+                color = MaterialTheme.colorScheme.error,
+                modifier = Modifier.padding(bottom = 8.dp)
+            )
+        }
         Button(
             onClick = {
                 isLoading = true
-                // Simulate login - replace with actual authentication
-                onLoginSuccess(selectedRole)
+                errorMessage = null
+                scope.launch {
+                    val result = userRepository.signIn(email, password)
+                    isLoading = false
+                    result.onSuccess {
+                        onLoginSuccess(it.role)
+                    }.onFailure {
+                        errorMessage = it.message ?: "Login failed"
+                    }
+                }
             },
             enabled = email.isNotBlank() && password.isNotBlank() && !isLoading,
             modifier = Modifier
@@ -120,6 +134,12 @@ fun LoginScreen(
             } else {
                 Text("Sign In")
             }
+        }
+        TextButton(
+            onClick = onRegister,
+            modifier = Modifier.padding(top = 16.dp)
+        ) {
+            Text("Don't have an account? Register")
         }
     }
 }

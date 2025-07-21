@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.CalendarToday
 import androidx.compose.material.icons.filled.Group
 import androidx.compose.material.icons.filled.Info
@@ -20,46 +21,53 @@ import androidx.compose.ui.unit.sp
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AttendeeScreen(
-    onNavigateToSchedule: () -> Unit
+    onNavigateToSchedule: () -> Unit,
+    onBack: () -> Unit
 ) {
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(16.dp)
-    ) {
-        // Header
-        Text(
-            text = "Welcome, Attendee!",
-            fontSize = 24.sp,
-            fontWeight = FontWeight.Bold,
-            modifier = Modifier.padding(bottom = 8.dp)
-        )
-        
-        Text(
-            text = "Louisville Youth Group Conference",
-            fontSize = 16.sp,
-            color = MaterialTheme.colorScheme.onSurfaceVariant,
-            modifier = Modifier.padding(bottom = 24.dp)
-        )
-
-        // Quick Actions
-        LazyColumn(
-            verticalArrangement = Arrangement.spacedBy(12.dp)
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                title = { Text("Welcome, Attendee!") },
+                navigationIcon = {
+                    IconButton(onClick = onBack) {
+                        Icon(Icons.Filled.ArrowBack, contentDescription = "Back")
+                    }
+                }
+            )
+        }
+    ) { paddingValues ->
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(paddingValues)
+                .padding(16.dp)
         ) {
-            items(attendeeMenuItems) { item ->
-                AttendeeMenuItem(
-                    title = item.title,
-                    description = item.description,
-                    icon = item.icon,
-                    onClick = {
-                        when (item.title) {
-                            "Schedule" -> onNavigateToSchedule()
-                            else -> {
-                                // Handle other navigation
+            Text(
+                text = "Louisville Youth Group Conference",
+                fontSize = 16.sp,
+                fontWeight = FontWeight.Normal,
+                modifier = Modifier.padding(bottom = 16.dp)
+            )
+
+            // Quick Actions
+            LazyColumn(
+                verticalArrangement = Arrangement.spacedBy(12.dp)
+            ) {
+                items(attendeeMenuItems) { item ->
+                    AttendeeMenuItem(
+                        title = item.title,
+                        description = item.description,
+                        icon = item.icon,
+                        onClick = {
+                            when (item.title) {
+                                "Schedule" -> onNavigateToSchedule()
+                                else -> {
+                                    // Handle other navigation
+                                }
                             }
                         }
-                    }
-                )
+                    )
+                }
             }
         }
     }

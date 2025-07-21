@@ -29,7 +29,7 @@ fun ScheduleScreen(
     val error by viewModel.error.collectAsState()
 
     LaunchedEffect(Unit) {
-        viewModel.loadSchedule("default-event-id")
+        viewModel.loadSchedule()
     }
 
     Column(
@@ -75,7 +75,7 @@ fun ScheduleScreen(
                     Button(
                         onClick = { 
                             viewModel.clearError()
-                            viewModel.loadSchedule("default-event-id")
+                            viewModel.loadSchedule()
                         },
                         modifier = Modifier.padding(top = 16.dp)
                     ) {

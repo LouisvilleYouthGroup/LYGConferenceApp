@@ -7,6 +7,7 @@ import com.lyg.conference.usecases.GetScheduleUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
 
 class ScheduleViewModel(
@@ -22,18 +23,23 @@ class ScheduleViewModel(
     private val _error = MutableStateFlow<String?>(null)
     val error: StateFlow<String?> = _error.asStateFlow()
 
-    fun loadSchedule(eventId: String) {
+    fun loadSchedule() {
         viewModelScope.launch {
             _isLoading.value = true
             _error.value = null
             
             try {
-                getScheduleUseCase(eventId).collect { sessionList ->
-                    _sessions.value = sessionList
-                }
+                getScheduleUseCase.getAllSessions()
+                    .catch { exception ->
+                        _error.value = "Failed to load schedule: ${exception.message}"
+                        _isLoading.value = false
+                    }
+                    .collect { sessions ->
+                        _sessions.value = sessions
+                        _isLoading.value = false
+                    }
             } catch (e: Exception) {
-                _error.value = e.message ?: "Unknown error occurred"
-            } finally {
+                _error.value = "Failed to load schedule: ${e.message}"
                 _isLoading.value = false
             }
         }

@@ -7,7 +7,15 @@ import kotlinx.coroutines.flow.Flow
 class GetScheduleUseCase(
     private val sessionRepository: SessionRepository
 ) {
-    suspend operator fun invoke(eventId: String): Flow<List<Session>> {
-        return sessionRepository.getSessions(eventId)
+    suspend fun getAllSessions(): Flow<List<Session>> {
+        return sessionRepository.getAllSessions()
+    }
+    
+    suspend fun getSessionsByEvent(eventId: String): Flow<List<Session>> {
+        return sessionRepository.getSessionsByEventId(eventId)
+    }
+    
+    suspend fun getSessionsBySpeaker(speakerId: String): Flow<List<Session>> {
+        return sessionRepository.getSessionsBySpeakerId(speakerId)
     }
 }

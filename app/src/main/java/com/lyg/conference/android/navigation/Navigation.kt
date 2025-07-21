@@ -85,7 +85,7 @@ fun LYGConferenceNavigation(
                     navController.popBackStack()
                 },
                 onAddSession = {
-                    // TODO: Navigate to add session screen
+                    navController.navigate("add_session")
                 }
             )
         }
@@ -96,7 +96,7 @@ fun LYGConferenceNavigation(
                     navController.popBackStack()
                 },
                 onAddSpeaker = {
-                    // TODO: Navigate to add speaker screen
+                    navController.navigate("add_speaker")
                 }
             )
         }
@@ -107,7 +107,7 @@ fun LYGConferenceNavigation(
                     navController.popBackStack()
                 },
                 onAddEvent = {
-                    // TODO: Navigate to add event screen
+                    navController.navigate("add_event")
                 }
             )
         }
@@ -126,13 +126,38 @@ fun LYGConferenceNavigation(
                     navController.popBackStack()
                 },
                 onCreateNotification = {
-                    // TODO: Navigate to create notification screen
+                    // TODO: Navigate to create notification screen when implemented
                 }
             )
         }
         
         composable("settings") {
             SettingsScreen(
+                onNavigateBack = {
+                    navController.popBackStack()
+                }
+            )
+        }
+        
+        // Add/Edit screens
+        composable("add_session") {
+            AddSessionScreen(
+                onNavigateBack = {
+                    navController.popBackStack()
+                }
+            )
+        }
+        
+        composable("add_speaker") {
+            AddSpeakerScreen(
+                onNavigateBack = {
+                    navController.popBackStack()
+                }
+            )
+        }
+        
+        composable("add_event") {
+            AddEventScreen(
                 onNavigateBack = {
                     navController.popBackStack()
                 }

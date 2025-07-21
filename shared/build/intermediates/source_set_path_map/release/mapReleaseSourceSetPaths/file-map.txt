@@ -1,0 +1,11 @@
+com.lyg.conference.shared-sqlite-2.4.0-0 /Users/maddiespalding/.gradle/caches/8.13/transforms/1890f2a2cd86afd879e652d1c833b0ac/transformed/sqlite-2.4.0/res
+com.lyg.conference.shared-sqlite-framework-2.4.0-1 /Users/maddiespalding/.gradle/caches/8.13/transforms/2cc4092ef897413562dc85aa5e15c7f6/transformed/sqlite-framework-2.4.0/res
+com.lyg.conference.shared-pngs-2 /Users/maddiespalding/AndroidStudioProjects/Confplanningapp/shared/build/generated/res/pngs/release
+com.lyg.conference.shared-resValues-3 /Users/maddiespalding/AndroidStudioProjects/Confplanningapp/shared/build/generated/res/resValues/release
+com.lyg.conference.shared-mergeReleaseResources-4 /Users/maddiespalding/AndroidStudioProjects/Confplanningapp/shared/build/intermediates/incremental/release/mergeReleaseResources/merged.dir
+com.lyg.conference.shared-mergeReleaseResources-5 /Users/maddiespalding/AndroidStudioProjects/Confplanningapp/shared/build/intermediates/incremental/release/mergeReleaseResources/stripped.dir
+com.lyg.conference.shared-release-6 /Users/maddiespalding/AndroidStudioProjects/Confplanningapp/shared/build/intermediates/merged_res/release/mergeReleaseResources
+com.lyg.conference.shared-androidMain-7 /Users/maddiespalding/AndroidStudioProjects/Confplanningapp/shared/src/androidMain/res
+com.lyg.conference.shared-androidRelease-8 /Users/maddiespalding/AndroidStudioProjects/Confplanningapp/shared/src/androidRelease/res
+com.lyg.conference.shared-main-9 /Users/maddiespalding/AndroidStudioProjects/Confplanningapp/shared/src/main/res
+com.lyg.conference.shared-release-10 /Users/maddiespalding/AndroidStudioProjects/Confplanningapp/shared/src/release/res

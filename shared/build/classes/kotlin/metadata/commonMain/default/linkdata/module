@@ -1,0 +1,2 @@
+
+<shared_commonMain>:com.lyg.conference.di:com.lyg.conference.models:com.lyg.conference.repository:com.lyg.conference.usecases:com.lyg.conference.viewmodels
